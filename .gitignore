@@ -4,3 +4,7 @@ attached_assets/
 .upm
 .replit
 data/
+requirements.txt
+.venv
+.env
+*.pyc
