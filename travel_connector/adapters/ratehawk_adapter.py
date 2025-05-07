@@ -23,17 +23,22 @@ logger = logging.getLogger(__name__)
 class RatehawkAdapter(BaseAdapter):
     """Adapter for the Ratehawk Hotel API"""
     
-    def __init__(self, api_key: str, api_url: str = "https://api.emergingtravel.com", 
+    def __init__(self, api_key: str, api_url: str = None, 
                  key_id: str = "5412", timeout: int = 30):
         """
         Initialize the Ratehawk adapter
         
         Args:
             api_key: Authentication key for the Ratehawk API
-            api_url: Base URL for the Ratehawk API
+            api_url: Base URL for the Ratehawk API (if None, uses RATEHAWK_URL from environment)
             key_id: KEY_ID associated with the API key (default: "5412")
             timeout: Request timeout in seconds
         """
+        import os
+        # Se api_url non è fornito, utilizza RATEHAWK_URL dall'ambiente
+        if api_url is None:
+            api_url = os.environ.get('RATEHAWK_URL', 'https://api.worldota.net/api/')
+        
         super().__init__(api_key, api_url, timeout)
         self.key_id = key_id
         self.transformer = RatehawkTransformer()

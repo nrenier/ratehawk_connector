@@ -45,13 +45,14 @@ def main():
     
     # Ottieni le credenziali Ratehawk dall'ambiente
     api_key = os.environ.get('RATEHAWK_API_KEY')
+    ratehawk_url = os.environ.get('RATEHAWK_URL')
     
     if not api_key:
         logger.error("Credenziali Ratehawk non trovate. Imposta la variabile d'ambiente RATEHAWK_API_KEY.")
         exit(1)
     
-    # Inizializza l'adapter Ratehawk
-    adapter = RatehawkAdapter(api_key=api_key)
+    # Inizializza l'adapter Ratehawk con l'URL da .env
+    adapter = RatehawkAdapter(api_key=api_key, api_url=ratehawk_url)
     
     # Esegui la sincronizzazione degli hotel
     if sync_hotels_from_ratehawk(adapter, country_code=args.country):

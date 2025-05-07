@@ -47,7 +47,11 @@ def get_region_dump_url() -> str:
         ConnectorError: Se non è possibile ottenere l'URL
     """
     try:
-        # Crea un'istanza del connector
+        # Ottieni RATEHAWK_URL dall'ambiente
+        import os
+        ratehawk_url = os.environ.get('RATEHAWK_URL')
+        
+        # Crea un'istanza del connector con l'URL corretto
         connector = create_connector()
         
         # Recupera il dump delle regioni (solo i metadati, non il file completo)
