@@ -229,8 +229,19 @@ def load_regions_to_opensearch(
                     hotels_number = len(doc.get('hotels', [])) if doc.get('hotels') else 0
                     
                     # Crea un documento pulito con i campi rilevanti
+                    
+                    # Converte il formato delle coordinate geografiche dal formato Ratehawk al formato OpenSearch
+                    center = doc.get('center')
+                    geo_point = None
+                    if center:
+                        if 'latitude' in center and 'longitude' in center:
+                            geo_point = {
+                                'lat': center.get('latitude'),
+                                'lon': center.get('longitude')
+                            }
+                    
                     doc_cleaned = {
-                        'center': doc.get('center'),
+                        'center': geo_point,
                         'hids': doc.get('hids'),
                         'hotels': doc.get('hotels'),
                         'hotels_number': hotels_number,

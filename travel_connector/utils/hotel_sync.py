@@ -29,10 +29,12 @@ HOTEL_INDEX = "hotel_ratehawk"
 
 # Configurazione di OpenSearch
 OPENSEARCH_CONFIG = {
-    'hosts': [{'host': 'localhost', 'port': 9200}],
-    'http_auth': ('user', 'pwd'),
-    'use_ssl': False,
-    'verify_certs': False,
+    'hosts': [{'host': os.environ.get('OPENSEARCH_HOST', 'localhost'), 
+               'port': int(os.environ.get('OPENSEARCH_PORT', 9200))}],
+    'http_auth': (os.environ.get('OPENSEARCH_USER', 'admin'), 
+                 os.environ.get('OPENSEARCH_PASSWORD', 'admin')),
+    'use_ssl': os.environ.get('OPENSEARCH_USE_SSL', 'false').lower() == 'true',
+    'verify_certs': os.environ.get('OPENSEARCH_VERIFY_CERTS', 'false').lower() == 'true',
     'ssl_assert_hostname': False,
     'ssl_show_warn': False
 }
